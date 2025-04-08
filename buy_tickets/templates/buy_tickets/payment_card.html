@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block title %}Flight Reservation{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Add a payment card</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'payment_card'%}" novalidate>
+                        {% csrf_token %}
+                        
+                        {{ form.non_field_errors }}
+
+                        {% for field in payment_card_form %}
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ field.id_for_label }}">
+                                    {{ field.label }}
+                                </label>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="text-danger small">
+                                        {{ field.errors }}
+                                    </div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-success">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+      <div class="col-md-8">
+        
+        <div class="card shadow-sm">
+          <div class="card-header bg-primary text-white">
+            <h4 class="mb-0">Your Payment Cards</h4>
+          </div>
+          <div class="card-body">
+            <form method="POST" action="{% url 'delete_payment_card' %}" novalidate>
+              {% csrf_token %}
+  
+              {% if payment_card_object %}
+                {% for object in payment_card_object %}
+                  <div class="mb-4 p-3 border rounded bg-light">
+                    <p class="mb-1 fw-bold">Card Name:</p>
+                    <p class="mb-2">{{ object.card_name }}</p>
+                    
+                    <p class="mb-1 fw-bold">Card Number:</p>
+                    <p class="mb-0">{{ object.number }}</p>
+                  </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-danger w-100">Delete All Cards</button>
+              {% else %}
+                <p class="text-muted">You have no saved payment cards.</p>
+              {% endif %}
+  
+            </form>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Flight Schedule{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Flight Schedule</h2>
+
+    <!-- Filter Form -->
+    <form method="GET" class="row g-3 mb-4">
+        <div class="col-md-4">
+            <label for="Departure" class="form-label">Choose an origin country:</label>
+            <select name="Departure" id="Departure" class="form-select">
+                <option value="Any">Any</option>
+                <option value="Argentina">Argentina</option>
+                <option value="Colombia">Colombia</option>
+                <option value="Arab Emirates united">Arab Emirates United</option>
+                <option value="Bolivia">Bolivia</option>
+                <option value="United States">United States</option>
+            </select>
+        </div>
+
+        <div class="col-md-4">
+            <label for="Destination" class="form-label">Choose a destination country:</label>
+            <select name="Destination" id="Destination" class="form-select">
+                <option value="Any">Any</option>
+                <option value="Argentina">Argentina</option>
+                <option value="Colombia">Colombia</option>
+                <option value="Arab Emirates united">Arab Emirates United</option>
+                <option value="Bolivia">Bolivia</option>
+                <option value="United States">United States</option>
+            </select>
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label">Departure Date:</label>
+            <input type="date" name="departure_date" class="form-control">
+        </div>
+
+        <div class="col-md-1 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">Search</button>
+        </div>
+    </form>
+
+    <!-- Flight Schedule Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover text-center align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Departure Hour</th>
+                    <th>Origin Country</th>
+                    <th>Destination Country</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for flight_info, schedule in combined_data %}
+                    <tr>
+                        <td>{{ schedule.hour }}</td>
+                        <td>{{ flight_info.origin_airport.airport_country }}</td>
+                        <td>{{ flight_info.destination_airport.airport_country }}</td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="3">No flights found for selected criteria.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

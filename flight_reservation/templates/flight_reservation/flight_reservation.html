@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Flight Reservation{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">Flight Reservation</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" novalidate>
+                        {% csrf_token %}
+
+                        <!-- Book Flight Form -->
+                        <h5 class="mb-3">Booking Info</h5>
+                        {% for field in book_flight_form %}
+                            <div class="mb-3">
+                                <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="text-danger small">{{ field.errors }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+
+                        <hr>
+
+                        <!-- Seat Form / Formset -->
+                        <h5 class="mb-3"> Seat Info</h5>
+                        {{ book_seat_form.management_form }}  <!-- required if it's a formset -->
+
+                        {% for form in book_seat_form %}
+                            <div class="border p-3 mb-3 rounded bg-light">
+                                {% for field in form %}
+                                    <div class="mb-2">
+                                        <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                        {{ field }}
+                                        {% if field.errors %}
+                                            <div class="text-danger small">{{ field.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+
+                        <div class="text-end">
+                            <button type="submit" class="btn btn-success">Submit Reservation</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

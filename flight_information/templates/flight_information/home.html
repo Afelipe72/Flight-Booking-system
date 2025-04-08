@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Flight information{% endblock %}
+
+{% block content %}
+
+    {% if user.is_authenticated %}
+    
+ 
+    <p> flights </p>
+    {% comment %} flight information {% endcomment %}
+    <h2>  schedules </h2>
+    <a href ="{% url 'flight_schedule' %}">flight_schedule </a>
+
+    <h2> rates </h2>
+    <a href ="{% url 'flight_rate' %}"> flight_rate</a>
+
+    <h2> information for flights  </h2>
+    <a href ="{% url 'flight_information' %}">flight_information</a>
+    
+    <h2> reservations </h2>
+    <a href ="{% url 'flight_reservation' %}">flight reservations</a>
+
+
+    {% else %}
+    <p> please log in </p>
+    <a href="{% url 'login' %}" class="btn btn-primary">Log In</a>
+    {% endif %}
+{% endblock %}

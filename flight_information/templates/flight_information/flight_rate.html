@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Flight Schedule{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Seat Filter</h2>
+
+    <!-- Filter Form -->
+    <form method="GET" class="row g-3 mb-4">
+        <!-- Seat class filter -->
+        <div class="col-md-4">
+            <label for="seat_class" class="form-label">Filter seat by class:</label>
+            <select name="seat_class" id="seat_class" class="form-select">
+                <option value="Any">Any</option>
+                <option value="Economy Class">Economy Class</option>
+                <option value="Business Class">Business Class</option>
+                <option value="First Class">First Class</option>
+            </select>
+        </div>
+
+        <!-- Price range -->
+        <div class="col-md-3">
+            <label for="min_price" class="form-label">Minimum price (USD):</label>
+            <input type="text" name="min_price" id="min_price" class="form-control" placeholder="e.g. 100">
+        </div>
+
+        <div class="col-md-3">
+            <label for="max_price" class="form-label">Maximum price (USD):</label>
+            <input type="text" name="max_price" id="max_price" class="form-control" placeholder="e.g. 500">
+        </div>
+
+        <div class="col-md-2 d-flex align-items-end">
+            <button type="submit" class="btn btn-primary w-100">Search</button>
+        </div>
+    </form>
+
+    <!-- Results Table -->
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover text-center align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Seat Class</th>
+                    <th>Price (USD)</th>
+                    <th>Destination</th>
+                    <th>Arrival Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.seat_class }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>{{ item.flight.destination_airport }}</td>
+                    <td>{{ item.flight.arrival_date }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4">No results found for the selected filters.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

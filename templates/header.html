@@ -1,0 +1,68 @@
+<nav class="navbar bg-primary navbar-expand-lg" data-bs-theme="dark">
+    <!-- Navbar content -->
+    <div class="container">
+      
+      <!-- Brand -->
+      <a class="navbar-brand fs-4 fw-bold" href="{% url 'dashboard' %}" >Home page</a>
+  
+      <!-- Navbar Toggler (for mobile view) -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+  
+      <!-- Navbar Content -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        
+        <!-- Left-aligned menu items -->
+        <ul class="navbar-nav me-auto mb-lg-0">
+          <li class="nav-item" >
+            <a class="nav-link active text-success" href="{% url 'flight_schedule' %}">Flight schedule</a>
+          </li>
+          
+          <li class="nav-item" >
+            <a class="nav-link active text-success" href="{% url 'flight_rate' %}">Flight rate</a>
+          </li>
+
+          <li class="nav-item" >
+            <a class="nav-link active text-success" href="{% url 'flight_information' %}">Flight information</a>
+          </li>
+
+          <li class="nav-item" >
+            <a class="nav-link active text-success" href="{% url 'flight_reservation' %}">Book flight</a>
+          </li>
+
+          <li class="nav-item" >
+            <a class="nav-link active text-success" href="{% url 'payment_card' %}">Add payment card</a>
+          </li>
+
+        </ul>
+  
+        <!-- Right-aligned dropdown -->
+        <ul class="navbar-nav ms-auto"> <!-- Pushes this section to the right -->
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle fs-5" href="#" role="button" data-bs-toggle="dropdown">
+              {{ user.username }}
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end"> <!-- Aligns dropdown to the right -->
+              <li>
+                <a class="dropdown-item" href="{% url 'password_change' %}">Change password</a>
+              </li>
+        
+              <!-- Divider -->
+              <li><hr class="dropdown-divider"></li>
+              
+              <!-- Logout Form -->
+              <li>
+                <form action="{% url 'logout' %}" method="post">
+                  {% csrf_token %}
+                  <button type="submit" class="dropdown-item text-danger">Log out</button>
+                </form>
+              </li>
+            </ul>
+          </li>
+        </ul>
+        
+      </div>
+  
+    </div>
+  </nav>

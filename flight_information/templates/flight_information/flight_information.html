@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+
+{% block title %}Flight Schedule{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <h2 class="mb-4">Search Flight Schedules</h2>
+
+  <form method="GET" class="row g-3">
+    <div class="col-md-4">
+      <label class="form-label">Origin Country</label>
+      <select class="form-select" name="Departure">
+        <option value="Any">Any</option>
+        <option value="Argentina">Argentina</option>
+        <option value="Colombia">Colombia</option>
+        <option value="Arab Emirates united">Arab Emirates united</option>
+        <option value="Bolivia">Bolivia</option>
+        <option value="United States">United States</option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Destination Country</label>
+      <select class="form-select" name="Destination">
+        <option value="Any">Any</option>
+        <option value="Argentina">Argentina</option>
+        <option value="Colombia">Colombia</option>
+        <option value="Arab Emirates united">Arab Emirates united</option>
+        <option value="Bolivia">Bolivia</option>
+        <option value="United States">United States</option>
+      </select>
+    </div>
+
+    <div class="col-md-4">
+      <label class="form-label">Flight Number</label>
+      <input type="text" class="form-control" name="flight_number" maxlength="10">
+    </div>
+
+    <div class="col-md-3">
+      <label class="form-label">Departure Date</label>
+      <input type="date" class="form-control" name="departure_date">
+    </div>
+
+    <div class="col-md-3">
+      <label class="form-label">Arrival Date</label>
+      <input type="date" class="form-control" name="arrival_date">
+    </div>
+
+    <div class="col-md-3">
+      <label class="form-label">Available Classes</label>
+      <select class="form-select" name="classes">
+        <option value="Any">Any</option>
+        <option value="Economy Class">Economy Class</option>
+        <option value="Business Class">Business Class</option>
+        <option value="First Class">First Class</option>
+      </select>
+    </div>
+
+    <div class="col-md-3 d-flex align-items-end">
+      <button type="submit" class="btn btn-primary w-100">Search</button>
+    </div>
+  </form>
+
+  <hr class="my-4">
+
+  <h3 class="mb-3">Flight Schedules</h3>
+
+  <div class="table-responsive">
+    <table class="table table-striped table-hover align-middle text-center">
+      <thead class="table-dark">
+        <tr>
+          <th>Origin Airport</th>
+          <th>Destination Airport</th>
+          <th>Departure</th>
+          <th>Arrival</th>
+          <th>Flight #</th>
+          <th>Capacity</th>
+          <th>Status</th>
+          <th>Airline</th>
+          <th>Available Classes</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for info in flights %}
+        <tr>
+          <td>{{ info.origin_airport }}</td>
+          <td>{{ info.destination_airport }}</td>
+          <td>{{ info.departure_date }}</td>
+          <td>{{ info.arrival_date }}</td>
+          <td>{{ info.flight_number }}</td>
+          <td>
+            {% for plane in info.airplane_info.all %}
+              {{ plane.passenger_capacity }} pax <br>
+            {% endfor %}
+          </td>
+          <td>{{ info.departure_date.status }}</td>
+          <td>{{ info.airline.airline_name }}</td>
+          <td>
+            {% for ticket in info.ticketprice_set.all %}
+              {{ ticket.seat_class }} <br>
+            {% endfor %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

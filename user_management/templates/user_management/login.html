@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+    <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%;">
+        <h2 class="text-center mb-4">Welcome!</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="{{ form.username.id_for_label }}" class="form-label">E-mail</label>
+                {{ form.username }}
+            </div>
+            <div class="mb-3">
+                <label for="{{ form.password.id_for_label }}" class="form-label">Password</label>
+                {{ form.password }}
+            </div>
+            <button type="submit" class="btn btn-primary w-100 mb-2">Log In</button>
+            <a href="{% url 'signup' %}">
+               <button type="button" class="btn btn-secondary w-100"> Sign up </button>
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}
